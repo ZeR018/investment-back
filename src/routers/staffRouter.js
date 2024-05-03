@@ -3,6 +3,7 @@ import db from '../db-config.js'
 
 const staffRouter = Router({});
 
+// Получить всех сотрудников
 staffRouter.get('/', (req, res) => {
     db.query(`CALL get_staff_procedure();`, (err, data) => {
         if (err) {
@@ -13,6 +14,13 @@ staffRouter.get('/', (req, res) => {
     })
 })
 
+// {
+//     "id_bank": ?,
+//     "job_title": ?, 
+//     "number": ?
+// }
+
+// Добавить сотрудника
 staffRouter.post('/', (req, res) => {
     const idBank = req.body.id_bank;
     const jobTitle = req.body.job_title;
@@ -40,6 +48,7 @@ staffRouter.post('/', (req, res) => {
     })
 })
 
+// Изменить должность сотрудника
 staffRouter.put('/change_job/:id', (req, res) => {
     const newJobTitle = req.body.job_title;
     const id = req.params.id;
