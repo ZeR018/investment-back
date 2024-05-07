@@ -63,13 +63,11 @@ paymentsRouter.post('/', (req, res) => {
     const amount = +req.body.amount;
     const operation = req.body.operation;
     const client = req.body.client;
-
     // Если неправильные данные
     if (!amount || !operation || !client) {
         res.sendStatus(400);
         return;
     }
-
     let params;
     let sql_str = '';
     if (client.type == "fl") {
@@ -85,7 +83,6 @@ paymentsRouter.post('/', (req, res) => {
             res.sendStatus(400);
             return;
         }
-        
         sql_str = `INSERT INTO ul_clients (Number, Manager, inn, Address, ID_check) VALUES (?, ?, ?, ?, ?)`;
         params = [client.number, client.manager, client.inn, client.address];
     }
@@ -93,25 +90,21 @@ paymentsRouter.post('/', (req, res) => {
         res.sendStatus(400);
         return;
     }
-
     // Добавляем чек в таблицу
     db.query('INSERT INTO payment (Amount, Operation) VALUES (?, ?)', [amount, operation], (err, data) => {
         if (err) {
             res.sendStatus(500);
             return;
         }
-
         // Узнаем id добавленного чека
         db.query('SELECT LAST_INSERT_ID()', (err, data) => {
             if (err) {
                 res.sendStatus(500);
                 return;
             }
-            
             // узнав id можем добавить его в параметры
             const id_check = Object.values(data[0])[0];
             params.push(id_check)
-            
             // Добавляем клиента, чек которого добавили выше
             db.query(sql_str, params, (err) => {
                     if (err) {
@@ -119,7 +112,6 @@ paymentsRouter.post('/', (req, res) => {
                         res.sendStatus(500);
                         return;
                     }
-
                     res.sendStatus(201);
                 });
         });

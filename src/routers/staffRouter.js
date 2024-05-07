@@ -66,21 +66,22 @@ staffRouter.put('/change_job/:id', (req, res) => {
     })
 })
 
-staffRouter.delete('/:id', (req, res) => {
-    const id = req.params.id;
+// Удалить сотрудника
+// staffRouter.delete('/:id', (req, res) => {
+//     const id = req.params.id;
 
-    if(!id) {
-        res.sendStatus(400);
-        return;
-    }
+//     if(!id) {
+//         res.sendStatus(400);
+//         return;
+//     }
 
-    db.query(`CALL delete_staff_procedure(?)`, [id], (err, data) => {
-        if (err) {
-            res.sendStatus(500);
-            return;
-        }
-        res.sendStatus(204)
-    })
-})
+//     db.query(`CALL delete_staff_procedure(?)`, [id], (err, data) => {
+//         if (err) {
+//             res.sendStatus(500);
+//             return;
+//         }
+//         res.sendStatus(204)
+//     })
+// })
 
 export default staffRouter;

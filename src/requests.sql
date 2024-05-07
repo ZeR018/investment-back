@@ -24,7 +24,7 @@ INSERT INTO logs SET ID_bank=NEW.ID_bank, msg='ins';
 END$$
 
 -- Процедура на получение списка сотрудников
-CREATE PROCEDURE `new_procedure` ()
+CREATE PROCEDURE `get_staff_procedure` ()
 BEGIN
 SELECT * FROM staff;
 END
@@ -49,11 +49,11 @@ UPDATE staff SET Job_title=new_job_title WHERE ID_employee=id;
 END
 
 -- Процедура на удаление сотрудника
-CREATE PROCEDURE `delete_staff_procedure` (
-IN id INT)
-BEGIN
-DELETE FROM staff WHERE ID_employee=id;
-END
+-- CREATE PROCEDURE `delete_staff_procedure` (
+-- IN id INT)
+-- BEGIN
+-- DELETE FROM staff WHERE ID_employee=id;
+-- END
 
 -- Представление securities
 CREATE VIEW `securities_view` AS
